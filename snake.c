@@ -319,37 +319,37 @@ Texture2D load_pp_texture(char *filename)
 void load_resources()
 {
 
-    snake_texture[INDEX_HEAD_UP] = load_pp_texture("snake_textures/snake_head_up.png");
+    snake_texture[INDEX_HEAD_UP] = load_pp_texture("assets/snake_textures/snake_head_up.png");
 
-    snake_texture[INDEX_HEAD_DOWN] = load_pp_texture("snake_textures/snake_head_down.png");
-    snake_texture[INDEX_HEAD_RIGHT] = load_pp_texture("snake_textures/snake_head_right.png");
-    snake_texture[INDEX_HEAD_LEFT] = load_pp_texture("snake_textures/snake_head_left.png");
-    snake_texture[INDEX_TAIL_UP] = load_pp_texture("snake_textures/snake_tail_up.png");
-    snake_texture[INDEX_TAIL_DOWN] = load_pp_texture("snake_textures/snake_tail_down.png");
-    snake_texture[INDEX_TAIL_RIGHT] = load_pp_texture("snake_textures/snake_tail_right.png");
-    snake_texture[INDEX_TAIL_LEFT] = load_pp_texture("snake_textures/snake_tail_left.png");
-    snake_texture[INDEX_BODY_HORZ] = load_pp_texture("snake_textures/snake_body_horz.png");
-    snake_texture[INDEX_BODY_VERT] = load_pp_texture("snake_textures/snake_body_vert.png");
-    snake_texture[INDEX_BODY_TOP_LEFT] = load_pp_texture("snake_textures/snake_body_top_left.png");
-    snake_texture[INDEX_BODY_TOP_RIGHT] = load_pp_texture("snake_textures/snake_body_top_right.png");
-    snake_texture[INDEX_BODY_BOTTOM_LEFT] = load_pp_texture("snake_textures/snake_body_bottom_left.png");
-    snake_texture[INDEX_BODY_BOTTOM_RIGHT] = load_pp_texture("snake_textures/snake_body_bottom_right.png");
+    snake_texture[INDEX_HEAD_DOWN] = load_pp_texture("assets/snake_textures/snake_head_down.png");
+    snake_texture[INDEX_HEAD_RIGHT] = load_pp_texture("assets/snake_textures/snake_head_right.png");
+    snake_texture[INDEX_HEAD_LEFT] = load_pp_texture("assets/snake_textures/snake_head_left.png");
+    snake_texture[INDEX_TAIL_UP] = load_pp_texture("assets/snake_textures/snake_tail_up.png");
+    snake_texture[INDEX_TAIL_DOWN] = load_pp_texture("assets/snake_textures/snake_tail_down.png");
+    snake_texture[INDEX_TAIL_RIGHT] = load_pp_texture("assets/snake_textures/snake_tail_right.png");
+    snake_texture[INDEX_TAIL_LEFT] = load_pp_texture("assets/snake_textures/snake_tail_left.png");
+    snake_texture[INDEX_BODY_HORZ] = load_pp_texture("assets/snake_textures/snake_body_horz.png");
+    snake_texture[INDEX_BODY_VERT] = load_pp_texture("assets/snake_textures/snake_body_vert.png");
+    snake_texture[INDEX_BODY_TOP_LEFT] = load_pp_texture("assets/snake_textures/snake_body_top_left.png");
+    snake_texture[INDEX_BODY_TOP_RIGHT] = load_pp_texture("assets/snake_textures/snake_body_top_right.png");
+    snake_texture[INDEX_BODY_BOTTOM_LEFT] = load_pp_texture("assets/snake_textures/snake_body_bottom_left.png");
+    snake_texture[INDEX_BODY_BOTTOM_RIGHT] = load_pp_texture("assets/snake_textures/snake_body_bottom_right.png");
 
-    fruit_texture = load_pp_texture("apple.png");
+    fruit_texture = load_pp_texture("assets/apple.png");
 
-    move_texture = load_pp_texture("key.png");
-    time_texture = load_pp_texture("clock.png");
-    background_texture = load_pp_texture("checker.png");
-    music_on_texture = load_pp_texture("sound_on.png");
-    music_off_texture = load_pp_texture("sound_off.png");
+    move_texture = load_pp_texture("assets/key.png");
+    time_texture = load_pp_texture("assets/clock.png");
+    background_texture = load_pp_texture("assets/checker.png");
+    music_on_texture = load_pp_texture("assets/sound_on.png");
+    music_off_texture = load_pp_texture("assets/sound_off.png");
 
-    start_texture = load_pp_texture("banner.png");
-    help_texture = load_pp_texture("help.png");
-    new_game_texture = load_pp_texture("game_over.png");
+    start_texture = load_pp_texture("assets/banner.png");
+    help_texture = load_pp_texture("assets/help.png");
+    new_game_texture = load_pp_texture("assets/game_over.png");
 
-    font = LoadFont("Roboto-Medium.ttf");
-    pop = LoadSound("eat.ogg");
-    fail = LoadSound("fail.ogg");
+    font = LoadFont("assets/Roboto-Medium.ttf");
+    pop = LoadSound("assets/eat.ogg");
+    fail = LoadSound("assets/fail.ogg");
 }
 void logVector(Vector2 *v, char *msg)
 {

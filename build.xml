@@ -1,0 +1,37 @@
+<project>
+
+    <target name="compile_mac">
+        <exec executable="clang">
+            <arg value="-framework"/>
+            <arg value="CoreVideo"/>
+            <arg value="-framework"/>
+            <arg value="IOKit"/>
+            <arg value="-framework"/>
+            <arg value="Cocoa"/>
+            <arg value="-framework"/>
+            <arg value="GLUT"/>
+            <arg value="-framework"/>
+            <arg value="OpenGL"/>
+            <arg value="libraylib.a"/>
+            <arg value="clist.c"/>
+            <arg value="snake.c"/>
+            <arg value="-o"/>
+            <arg value="snake"/>
+
+        </exec>
+
+    </target>
+    <target name="bundle_mac" depends="compile_mac">
+        <delete file="dist/mac_osx_x86.zip"/>
+        <zip destfile="dist/mac_osx_x86.zip">
+            <fileset dir="." includes="*.png"/>
+            <fileset dir="." includes="*.ogg"/>
+            <fileset dir="." includes="*.ttf"/>
+
+            <zipfileset dir="./assets" prefix="./assets"/>
+        </zip>
+    </target>
+
+
+
+</project>
