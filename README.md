@@ -35,3 +35,4 @@ Keyboard:
 
  - Cool GUI assets from [Handdrawn Vector Icon Pack](https://penzilla.itch.io/handdrawn-vector-icon-pack)
  - Snake logo from [Free Snake Cartoon Pictures](https://charatoon.com/cat/?id=132)
+ - Sound from [Crunches](https://opengameart.org/content/7-eating-crunches), [Pop](https://opengameart.org/content/bubbles-pop)
