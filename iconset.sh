@@ -1,4 +1,4 @@
-ICON="assets/Snake_F.png"
+ICON="assets/Snake_FW.png"
 ICONSET="Snake.iconset"
 
 mkdir Snake.iconset

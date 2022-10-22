@@ -39,7 +39,7 @@ static rtpAtlasSprite rtpDescAsset[34] = {
     { "snake_body_horz", 0, 0, 557, 586, 40, 40, 0, false, 0, 5, 40, 30 },
     { "snake_body_top_left", 0, 0, 597, 586, 40, 40, 0, false, 0, 0, 36, 36 },
     { "snake_body_top_right", 0, 0, 397, 586, 40, 40, 0, false, 4, 0, 36, 36 },
-    { "snake_body_vert", 0, 0, 437, 586, 40, 40, 0, false, 5, 0, 30, 40 },
+    { "snake_body_vert", 0, 0, 438, 587, 38, 38, 0, false, 5, 0, 30, 40 },
     { "snake_head_down", 0, 0, 311, 586, 43, 41, 0, false, 0, 0, 43, 41 },
     { "snake_head_left", 0, 0, 187, 586, 41, 43, 0, false, 0, 0, 41, 43 },
     { "snake_head_right", 0, 0, 228, 586, 41, 43, 0, false, 0, 0, 41, 43 },
