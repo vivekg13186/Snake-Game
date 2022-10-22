@@ -1,5 +1,96 @@
 #include "snake.h"
 
+Vector2 ZERO = (Vector2){0, 0};
+
+void draw_text(char *text, int x, int y)
+{
+    int i = 0;
+    char c = text[i];
+    
+    while (c != '\0')
+    {
+        int tile_index = -1;
+        switch (c)
+        {
+        case '0':
+        {
+            tile_index = TILE_CHAR_0;
+            break;
+        }
+        case '1':
+        {
+            tile_index = TILE_CHAR_1;
+            break;
+        }
+        case '2':
+        {
+            tile_index = TILE_CHAR_2;
+            break;
+        }
+        case '3':
+        {
+            tile_index = TILE_CHAR_3;
+            break;
+        }
+        case '4':
+        {
+            tile_index = TILE_CHAR_4;
+            break;
+        }
+        case '5':
+        {
+            tile_index = TILE_CHAR_5;
+            break;
+        }
+        case '6':
+        {
+            tile_index = TILE_CHAR_6;
+            break;
+        }
+        case '7':
+        {
+            tile_index = TILE_CHAR_7;
+            break;
+        }
+        case '8':
+        {
+            tile_index = TILE_CHAR_8;
+            break;
+        }
+        case '9':
+        {
+            tile_index = TILE_CHAR_9;
+            break;
+        }
+        case '.':
+        {
+            tile_index = TILE_CHAR_POINT;
+            break;
+        }
+        default:
+            break;
+        }
+        if (tile_index != -1)
+        {
+            rtpAtlasSprite tile = rtpDescAsset[tile_index];
+            Rectangle pos = {x, y, tile.sourceWidth, tile.sourceHeight};
+            DrawTexturePro(texture_pack, (Rectangle){tile.positionX, tile.positionY, tile.sourceWidth, tile.sourceHeight}, pos, ZERO, 0, WHITE);
+            x += tile.sourceWidth + 5;
+        }
+        i++;
+        c =text[i];
+    }
+}
+void draw_tile(int index, Rectangle rec)
+{
+    rtpAtlasSprite tile = rtpDescAsset[index];
+    DrawTexturePro(texture_pack, (Rectangle){tile.positionX, tile.positionY, tile.sourceWidth, tile.sourceHeight}, rec, ZERO, 0, WHITE);
+}
+rtpAtlasSprite get_tile(int index)
+{
+    return rtpDescAsset[index];
+}
+
 Rectangle button_coo(Rectangle v, Rectangle src, Rectangle dst, Vector2 offset)
 {
     float x1 = Remap(v.x, src.x, src.width, dst.x, dst.width) + offset.x;
@@ -23,10 +114,11 @@ void debug_button(Rectangle v, Rectangle src, Rectangle dst, Vector2 offset)
     Rectangle c = button_coo(v, src, dst, offset);
     DrawRectangleLines(c.x, c.y, c.width, c.height, RED);
 }
-void putScore(char* text,Rectangle v, Rectangle src, Rectangle dst, Vector2 offset)
+void putScore(char *text, Rectangle v, Rectangle src, Rectangle dst, Vector2 offset)
 {
     Rectangle c = button_coo(v, src, dst, offset);
-    DrawText(text,c.x, c.y, 20, WHITE);
+    //DrawText(text, c.x, c.y, 20, WHITE);
+    draw_text(text,c.x, c.y);
 }
 void play_sound(Sound s)
 {
@@ -41,16 +133,16 @@ void grid_to_local(Vector2 *src, Vector2 *dest)
     dest->x = (src->x * CELL_SIZE) + CELL_SIZE;
     dest->y = (src->y * CELL_SIZE) + CELL_SIZE + DASHBOARD_HEIGHT;
 }
-Texture2D get_snake_body_texture(Vector2 cur, Vector2 prev, Vector2 next)
+int get_snake_body_texture(Vector2 cur, Vector2 prev, Vector2 next)
 {
 
     if (cur.x == prev.x && cur.x == next.x)
     {
-        return snake_texture[INDEX_BODY_VERT];
+        return TILE_SNAKE_BODY_VERT;
     }
     else if (cur.y == prev.y && cur.y == next.y)
     {
-        return snake_texture[INDEX_BODY_HORZ];
+        return TILE_SNAKE_BODY_HORZ;
     }
 
     Vector2 ndir = Vector2Subtract(cur, next);
@@ -58,100 +150,100 @@ Texture2D get_snake_body_texture(Vector2 cur, Vector2 prev, Vector2 next)
 
     if ((IS_UP(ndir) && IS_LEFT(pdir)) || (IS_UP(pdir) && IS_LEFT(ndir)))
     {
-        return snake_texture[INDEX_BODY_BOTTOM_RIGHT];
+        return TILE_SNAKE_BODY_BOTTOM_RIGHT;
     }
 
     if ((IS_UP(ndir) && IS_RIGHT(pdir)) || (IS_UP(pdir) && IS_RIGHT(ndir)))
     {
-        return snake_texture[INDEX_BODY_BOTTOM_LEFT];
+        return TILE_SNAKE_BODY_BOTTOM_LEFT;
     }
 
     if ((IS_DOWN(ndir) && IS_RIGHT(pdir)) || (IS_DOWN(pdir) && IS_RIGHT(ndir)))
     {
-        return snake_texture[INDEX_BODY_TOP_LEFT];
+        return TILE_SNAKE_BODY_TOP_LEFT;
     }
 
-    return snake_texture[INDEX_BODY_TOP_RIGHT];
+    return TILE_SNAKE_BODY_TOP_RIGHT;
 }
-Texture2D get_snake_head_texture(Vector2 v)
+int get_snake_head_texture(Vector2 v)
 {
 
     if (IS_UP(v))
     {
-        return snake_texture[INDEX_HEAD_UP];
+        return TILE_SNAKE_HEAD_UP;
     }
     if (IS_DOWN(v))
     {
-        return snake_texture[INDEX_HEAD_DOWN];
+        return TILE_SNAKE_HEAD_DOWN;
     }
     if (IS_LEFT(v))
     {
-        return snake_texture[INDEX_HEAD_LEFT];
+        return TILE_SNAKE_HEAD_LEFT;
     }
     if (IS_RIGHT(v))
     {
-        return snake_texture[INDEX_HEAD_RIGHT];
+        return TILE_SNAKE_HEAD_RIGHT;
     }
 }
 
-Texture2D get_snake_tail_texture(Vector2 v)
+int get_snake_tail_texture(Vector2 v)
 {
 
     if (IS_UP(v))
     {
-        return snake_texture[INDEX_TAIL_UP];
+        return TILE_SNAKE_TAIL_UP;
     }
     if (IS_DOWN(v))
     {
-        return snake_texture[INDEX_TAIL_DOWN];
+        return TILE_SNAKE_TAIL_DOWN;
     }
     if (IS_LEFT(v))
     {
-        return snake_texture[INDEX_TAIL_LEFT];
+        return TILE_SNAKE_TAIL_LEFT;
     }
     if (IS_RIGHT(v))
     {
-        return snake_texture[INDEX_TAIL_RIGHT];
+        return TILE_SNAKE_TAIL_RIGHT;
     }
 }
 void print_stats()
 {
     char buf[256];
     sprintf(buf, "%d", state.score);
+    int y = 20;
 
-    DrawTexturePro(fruit_texture, (Rectangle){0, 0, fruit_texture.width, fruit_texture.height}, (Rectangle){20, 10, 30, 30}, (Vector2){0, 0}, 0, WHITE);
-    DrawTextEx(font, buf, (Vector2){55, 15}, 24, 1, WHITE);
+    draw_tile(TILE_APPLE, (Rectangle){20, 10, 30, 30});
+    //DrawTextEx(font, buf, (Vector2){55, 15}, 24, 1, WHITE);
+    draw_text(buf,55,y);
 
+    draw_tile(TILE_KEY, (Rectangle){150, 10, 30, 30});
     sprintf(buf, "%d", state.movement);
-    DrawTexturePro(move_texture, (Rectangle){0, 0, move_texture.width, move_texture.height}, (Rectangle){150, 10, 30, 30}, (Vector2){0, 0}, 0, WHITE);
-    DrawTextEx(font, buf, (Vector2){185, 15}, 24, 1, WHITE);
+    //DrawTextEx(font, buf, (Vector2){185, 15}, 24, 1, WHITE);
+    draw_text(buf,185, y);
 
+    draw_tile(TILE_CLOCK, (Rectangle){280, 10, 30, 30});
     sprintf(buf, "%.2f", state.time);
-    DrawTexturePro(time_texture, (Rectangle){0, 0, time_texture.width, time_texture.height}, (Rectangle){280, 10, 30, 30}, (Vector2){0, 0}, 0, WHITE);
-    DrawTextEx(font, buf, (Vector2){320, 15}, 24, 1, WHITE);
+    //DrawTextEx(font, buf, (Vector2){320, 15}, 24, 1, WHITE);
+     draw_text(buf,320, y);
     Rectangle icon_size = (Rectangle){GetScreenWidth() - 50, 15, 25, 25};
     if (state.is_music_on)
     {
-        DrawTexturePro(music_on_texture, (Rectangle){0, 0, music_on_texture.width, music_on_texture.height}, icon_size, (Vector2){0, 0}, 0, WHITE);
+        draw_tile(TILE_SOUND_ON, icon_size);
     }
 
     else
     {
-        DrawTexturePro(music_off_texture, (Rectangle){0, 0, music_off_texture.width, music_off_texture.height}, icon_size, (Vector2){0, 0}, 0, WHITE);
+        draw_tile(TILE_SOUND_OFF, icon_size);
     }
 }
-void draw_game_over()
-{
 
-    int x = (GetScreenWidth() / 2) - (MeasureText("Game Over.Press 'R' to restart.", 12) / 2);
-    DrawTextEx(font, "Game Over.Press 'R' to restart.", (Vector2){x, GetScreenHeight() / 2}, 20, 1, WHITE);
-}
 void draw_fruit()
 {
 
     Vector2 pos;
     grid_to_local(&(state.fruit), &pos);
-    DrawTextureEx(fruit_texture, pos, 0, 0.5, WHITE);
+    rtpAtlasSprite tile = rtpDescAsset[TILE_APPLE];
+    draw_tile(TILE_APPLE, (Rectangle){pos.x, pos.y, tile.sourceWidth / 2, tile.sourceHeight / 2});
 }
 
 void spawn_fruit()
@@ -170,27 +262,27 @@ void draw_snake()
 
         Vector2 *v = state.snake.body->at(state.snake.body, i);
 
-        Texture2D txt;
+        int tile_index;
         if (i == 0)
         {
 
-            txt = get_snake_head_texture(state.snake.direction);
+            tile_index = get_snake_head_texture(state.snake.direction);
         }
         else if (i == tail)
         {
             Vector2 *prev = state.snake.body->at(state.snake.body, i - 1);
 
-            txt = get_snake_tail_texture(Vector2Subtract(*v, *prev));
+            tile_index = get_snake_tail_texture(Vector2Subtract(*v, *prev));
         }
         else
         {
             Vector2 *prev = state.snake.body->at(state.snake.body, i - 1);
             Vector2 *next = state.snake.body->at(state.snake.body, i + 1);
-            txt = get_snake_body_texture(*v, *prev, *next);
+            tile_index = get_snake_body_texture(*v, *prev, *next);
         }
         Vector2 pos;
         grid_to_local(v, &pos);
-        DrawTexturePro(txt, (Rectangle){0, 0, txt.width, txt.height}, (Rectangle){pos.x, pos.y, CELL_SIZE + 1, CELL_SIZE}, (Vector2){0, 0}, 0, WHITE);
+        draw_tile(tile_index, (Rectangle){pos.x, pos.y, CELL_SIZE + 1, CELL_SIZE});
     }
 }
 
@@ -203,8 +295,9 @@ void draw_background()
     DrawRectangle(0, 0, GetScreenWidth(), DASHBOARD_HEIGHT, (Color){203, 157, 135, 255});
 
     DrawRectangle(0, DASHBOARD_HEIGHT, GetScreenWidth(), GetScreenHeight(), (Color){38, 24, 27, 255});
-    DrawTextureTiled(background_texture,
-                     (Rectangle){0, 0, background_texture.width, background_texture.height},
+    rtpAtlasSprite tile_region = rtpDescAsset[TILE_CHECKER];
+    DrawTextureTiled(texture_pack,
+                     (Rectangle){tile_region.positionX, tile_region.positionY, tile_region.sourceWidth, tile_region.sourceHeight},
                      (Rectangle){CELL_SIZE, top, CELL_NUMBER * CELL_SIZE, CELL_NUMBER * CELL_SIZE},
                      (Vector2){0, 0}, 0, scale, WHITE);
 }
@@ -318,38 +411,27 @@ Texture2D load_pp_texture(char *filename)
 }
 void load_resources()
 {
+    Image image_data = {0};
+    image_data.format = IMAGE_DATA_FORMAT;
+    image_data.height = IMAGE_DATA_HEIGHT;
+    image_data.width = IMAGE_DATA_WIDTH;
+    image_data.data = IMAGE_DATA_DATA;
+    image_data.mipmaps = 1;
+    texture_pack = LoadTextureFromImage(image_data);
+    SetTextureFilter(texture_pack, TEXTURE_FILTER_TRILINEAR);
 
-    snake_texture[INDEX_HEAD_UP] = load_pp_texture("assets/snake_textures/snake_head_up.png");
-
-    snake_texture[INDEX_HEAD_DOWN] = load_pp_texture("assets/snake_textures/snake_head_down.png");
-    snake_texture[INDEX_HEAD_RIGHT] = load_pp_texture("assets/snake_textures/snake_head_right.png");
-    snake_texture[INDEX_HEAD_LEFT] = load_pp_texture("assets/snake_textures/snake_head_left.png");
-    snake_texture[INDEX_TAIL_UP] = load_pp_texture("assets/snake_textures/snake_tail_up.png");
-    snake_texture[INDEX_TAIL_DOWN] = load_pp_texture("assets/snake_textures/snake_tail_down.png");
-    snake_texture[INDEX_TAIL_RIGHT] = load_pp_texture("assets/snake_textures/snake_tail_right.png");
-    snake_texture[INDEX_TAIL_LEFT] = load_pp_texture("assets/snake_textures/snake_tail_left.png");
-    snake_texture[INDEX_BODY_HORZ] = load_pp_texture("assets/snake_textures/snake_body_horz.png");
-    snake_texture[INDEX_BODY_VERT] = load_pp_texture("assets/snake_textures/snake_body_vert.png");
-    snake_texture[INDEX_BODY_TOP_LEFT] = load_pp_texture("assets/snake_textures/snake_body_top_left.png");
-    snake_texture[INDEX_BODY_TOP_RIGHT] = load_pp_texture("assets/snake_textures/snake_body_top_right.png");
-    snake_texture[INDEX_BODY_BOTTOM_LEFT] = load_pp_texture("assets/snake_textures/snake_body_bottom_left.png");
-    snake_texture[INDEX_BODY_BOTTOM_RIGHT] = load_pp_texture("assets/snake_textures/snake_body_bottom_right.png");
-
-    fruit_texture = load_pp_texture("assets/apple.png");
-
-    move_texture = load_pp_texture("assets/key.png");
-    time_texture = load_pp_texture("assets/clock.png");
-    background_texture = load_pp_texture("assets/checker.png");
-    music_on_texture = load_pp_texture("assets/sound_on.png");
-    music_off_texture = load_pp_texture("assets/sound_off.png");
-
-    start_texture = load_pp_texture("assets/banner.png");
-    help_texture = load_pp_texture("assets/help.png");
-    new_game_texture = load_pp_texture("assets/game_over.png");
+    Wave eat_wave = (Wave){
+        EAT_FRAME_COUNT,
+        EAT_SAMPLE_RATE, EAT_SAMPLE_SIZE, EAT_CHANNELS,
+        eat_sound_dataData};
+    pop = LoadSoundFromWave(eat_wave);
+    Wave fail_wave = (Wave){
+        FAIL_FRAME_COUNT,
+        FAIL_SAMPLE_RATE, FAIL_SAMPLE_SIZE, FAIL_CHANNELS,
+        fail_sound_dataData};
+    fail = LoadSoundFromWave(fail_wave);
 
     font = LoadFont("assets/Roboto-Medium.ttf");
-    pop = LoadSound("assets/eat.ogg");
-    fail = LoadSound("assets/fail.ogg");
 }
 void logVector(Vector2 *v, char *msg)
 {
@@ -361,17 +443,18 @@ void draw_start_screen()
     float height = GetScreenHeight() / 2;
     int x = width / 2;
     int y = height / 2;
-    Rectangle src = (Rectangle){0, 0, start_texture.width, start_texture.height};
+    rtpAtlasSprite start_texture = get_tile(TILE_BANNER);
+    Rectangle src = (Rectangle){0, 0, start_texture.sourceWidth, start_texture.sourceHeight};
     Rectangle dst = (Rectangle){0, 0, width, height};
     Vector2 pos = (Vector2){x, y};
 
-    if (is_button_click(button_marathon, src, dst, pos))
+    if (is_button_click(button_marathon, src, dst, pos)|| IsKeyPressed(KEY_M))
     {
         TraceLog(LOG_INFO, "Marthon clicked");
         state.run_mode = GAME_MODE_MARATHON;
         state.mode = PAUSE_GAME;
     }
-    else if (is_button_click(button_sprint, src, dst, pos))
+    else if (is_button_click(button_sprint, src, dst, pos)|| IsKeyPressed(KEY_S))
     {
         TraceLog(LOG_INFO, "Sprint clicked");
         state.run_mode = GAME_MODE_SPRINT;
@@ -387,13 +470,8 @@ void draw_start_screen()
     draw_background();
     print_stats();
 
-    // 16,36  83,51
-    // debug_button((Rectangle){(22/100),(50/100),100,100},x,y);
+    draw_tile(TILE_BANNER, (Rectangle){x, y, width, height});
 
-    DrawTexturePro(start_texture, (Rectangle){0, 0, start_texture.width, start_texture.height}, (Rectangle){x, y, width, height}, (Vector2){0, 0}, 1, WHITE);
-    // debug_button(button_marathon,src,dst,pos);
-    // debug_button(button_sprint,src,dst,pos);
-    // debug_button(button_help,src,dst,pos);
     EndDrawing();
 }
 float delta = 0;
@@ -482,37 +560,36 @@ void pause_game()
     EndDrawing();
 }
 void fail_screen()
-{  
+{
 
-   
     float width = GetScreenWidth() / 2;
     float height = GetScreenHeight() / 2;
     int x = width / 2;
     int y = height / 2;
-    Rectangle src = (Rectangle){0, 0, new_game_texture.width, new_game_texture.height};
+    rtpAtlasSprite new_game_texture = get_tile(TILE_GAME_OVER);
+    Rectangle src = (Rectangle){0, 0, new_game_texture.sourceWidth, new_game_texture.sourceHeight};
     Rectangle dst = (Rectangle){0, 0, width, height};
     Vector2 pos = (Vector2){x, y};
-     if(is_button_click(button_home_game_over,src,dst,pos)){
+    if (is_button_click(button_home_game_over, src, dst, pos))
+    {
         reset_state();
-        state.mode=START_SCREEN;
-     }
-   BeginDrawing();
+        state.mode = START_SCREEN;
+    }
+    BeginDrawing();
     draw_background();
     print_stats();
 
-
     char buf[256];
-     
-    DrawTexturePro(new_game_texture, (Rectangle){0, 0, new_game_texture.width, new_game_texture.height}, (Rectangle){x, y, width, height}, (Vector2){0, 0}, 1, WHITE);
-     sprintf(buf, "%d", state.score);
-    putScore(buf,cherry_score_box,src,dst,pos);
-     sprintf(buf, "%.2f", state.time);
-    putScore(buf,time_score_box,src,dst,pos);
+
+    draw_tile(TILE_GAME_OVER, (Rectangle){x, y, width, height});
+    sprintf(buf, "%d", state.score);
+    putScore(buf, cherry_score_box, src, dst, pos);
+    sprintf(buf, "%.2f", state.time);
+    putScore(buf, time_score_box, src, dst, pos);
     sprintf(buf, "%d", state.movement);
-     putScore(buf,key_score_box,src,dst,pos);
+    putScore(buf, key_score_box, src, dst, pos);
     EndDrawing();
 }
-
 
 void help_screen()
 {
@@ -520,14 +597,15 @@ void help_screen()
     float height = GetScreenHeight() / 2;
     int x = width / 2;
     int y = height / 2;
-    Rectangle src = (Rectangle){0, 0, help_texture.width, help_texture.height};
+    rtpAtlasSprite help_texture = get_tile(TILE_HELP);
+    Rectangle src = (Rectangle){0, 0, help_texture.sourceWidth, help_texture.sourceHeight};
     Rectangle dst = (Rectangle){0, 0, width, height};
     Vector2 pos = (Vector2){x, y};
 
- if (is_button_click(button_home, src, dst, pos))
+    if (is_button_click(button_home, src, dst, pos))
     {
         TraceLog(LOG_INFO, "Home clicked");
-       
+
         state.mode = START_SCREEN;
     }
 
@@ -535,8 +613,8 @@ void help_screen()
     draw_background();
     print_stats();
 
-    DrawTexturePro(help_texture, (Rectangle){0, 0, help_texture.width, help_texture.height}, (Rectangle){x, y, width, height}, (Vector2){0, 0}, 1, WHITE);
-    //debug_button(button_home,src,dst,pos);
+    draw_tile(TILE_HELP, (Rectangle){x, y, width, height});
+
     EndDrawing();
 }
 
@@ -565,7 +643,7 @@ int main()
         if (IsWindowHidden() || IsWindowMinimized())
             continue;
 
-        if (IsKeyPressed(KEY_M))
+        if (IsKeyPressed(KEY_V))
         {
             state.is_music_on = !state.is_music_on;
         }

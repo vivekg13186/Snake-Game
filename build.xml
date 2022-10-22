@@ -1,5 +1,27 @@
 <project>
 
+
+<target name="data_2_header">
+ <exec executable="clang">
+            <arg value="-framework"/>
+            <arg value="CoreVideo"/>
+            <arg value="-framework"/>
+            <arg value="IOKit"/>
+            <arg value="-framework"/>
+            <arg value="Cocoa"/>
+            <arg value="-framework"/>
+            <arg value="GLUT"/>
+            <arg value="-framework"/>
+            <arg value="OpenGL"/>
+            <arg value="libraylib.a"/>
+            <arg value="data_2_header.c"/>
+            <arg value="-o"/>
+            <arg value="data_2_header"/>
+
+        </exec>
+        <exec executable="./data_2_header"/>
+</target>
+
     <target name="compile_mac">
         <exec executable="clang">
             <arg value="-framework"/>
@@ -19,6 +41,7 @@
             <arg value="snake"/>
 
         </exec>
+        <exec executable="./snake"/>
 
     </target>
     <target name="bundle_mac" depends="compile_mac">
