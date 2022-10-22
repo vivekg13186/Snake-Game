@@ -14,9 +14,9 @@
             <arg value="-framework"/>
             <arg value="OpenGL"/>
             <arg value="libraylib.a"/>
-            <arg value="data_2_header.c"/>
+            <arg value="scripts/data_2_header.c"/>
             <arg value="-o"/>
-            <arg value="data_2_header"/>
+            <arg value="scripts/data_2_header"/>
 
         </exec>
         <exec executable="./data_2_header"/>
@@ -36,14 +36,14 @@
             <arg value="OpenGL"/>
             <arg value="libraylib.a"/>
             <arg value="clist.c"/>
-            <arg value="snake.c"/>
+            <arg value="./src/snake.c"/>
             <arg value="-o"/>
-            <arg value="snake"/>
+            <arg value="./gen/snake"/>
 
         </exec>
-        <exec  executable="./iconset.sh"/>
-        <exec  executable="./bundle_app.sh"/>
-        <exec executable="./snake"/>
+        <exec  executable="./scripts/iconset.sh"/>
+        <exec  executable="./scripts/bundle_app.sh"/>
+        <exec executable="./gen/snake"/>
 
     </target>
      
