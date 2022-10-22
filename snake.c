@@ -431,7 +431,6 @@ void load_resources()
         fail_sound_dataData};
     fail = LoadSoundFromWave(fail_wave);
 
-    font = LoadFont("assets/Roboto-Medium.ttf");
 }
 void logVector(Vector2 *v, char *msg)
 {
@@ -570,7 +569,7 @@ void fail_screen()
     Rectangle src = (Rectangle){0, 0, new_game_texture.sourceWidth, new_game_texture.sourceHeight};
     Rectangle dst = (Rectangle){0, 0, width, height};
     Vector2 pos = (Vector2){x, y};
-    if (is_button_click(button_home_game_over, src, dst, pos))
+    if (is_button_click(button_home_game_over, src, dst, pos)||IsKeyPressed(KEY_H))
     {
         reset_state();
         state.mode = START_SCREEN;

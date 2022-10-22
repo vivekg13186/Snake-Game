@@ -59,7 +59,7 @@
 #define CELL_SIZE 25
 #define CELL_NUMBER 20
 #define MAX_SPEED 0.1
-#define INIT_SPEED 0.3
+#define INIT_SPEED 0.2
 #define SCORE_TO_SPEED 5
 #define length(s) s->count(s)
 #define IS_UP(v) v.y == -1

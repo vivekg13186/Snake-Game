@@ -41,20 +41,13 @@
             <arg value="snake"/>
 
         </exec>
+        <exec  executable="./iconset.sh"/>
+        <exec  executable="./bundle_app.sh"/>
         <exec executable="./snake"/>
 
     </target>
-    <target name="bundle_mac" depends="compile_mac">
-        <delete file="dist/mac_osx_x86.zip"/>
-        <zip destfile="dist/mac_osx_x86.zip">
-            <fileset dir="." includes="*.png"/>
-            <fileset dir="." includes="*.ogg"/>
-            <fileset dir="." includes="*.ttf"/>
+     
 
-            <zipfileset dir="./assets" prefix="./assets"/>
-        </zip>
-    </target>
-
-
+ 
 
 </project>
