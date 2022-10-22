@@ -21,8 +21,7 @@ Keyboard:
 
 ### Screenshots
 
-![](assets/screenshot1.png "Classic Snake")
-![](assets/screenshot2.png "Classic Snake")
+![](assets/game.gif "Classic Snake")
 
 ### Links
 
